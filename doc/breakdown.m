@@ -1,12 +1,6 @@
-% addpath(genpath('./doc'));
-%%
 addpath(genpath('../'));
 % addpath(genpath('path/to/ndsparse'));
 addpath(genpath('/Users/benjaminsylvanus/Documents/GitHub/SparseMatrixGenerator/ndSparse_G4_2021_03_16'));
-
-%%
-
-
 
 % Add general Comments with issues and a Demo File.
 
@@ -143,9 +137,10 @@ for i = 1:numel(batch.Elements)
         end
 
         batch.TF(i) = {pos_fill};
-
+        
+        % TO PLOT:
         %{
-
+        
         hold on;
         is = isosurface(pos_fill,0);
         is.vertices = is.vertices + [Sy Sx Sz];
@@ -155,7 +150,7 @@ for i = 1:numel(batch.Elements)
         view(3);
         axis tight;
         daspect([1,1,.4]);
-
+        
         %}
 
         ecount = ecount + batch.SIZE(i); 
@@ -187,18 +182,19 @@ function pos = swc2v(x0,y0,z0,x1,x2,y1,y2,z1,z2,r1,r2,Nx,Ny,Nz)
     
     dist2 = (x0-x).^2 + (y0-y).^2 + (z0-z).^2;
 
+    % Original Calculation 
+    %     r = r1 + sqrt((x-x1).^2 + (y-y1).^2 + (z-z1).^2) /...
+    %         sqrt((x2-x1)^2+(y2-y1)^2+(z2-z1)^2) * (r2-r1);
+    
+    
+    % [r, c]: variable calculation
+    %     r = ( c + r2 ) / (sqrt ( 1 - ( |r1-r2 | / l ) )
 
-%     r = r1 + sqrt((x-x1).^2 + (y-y1).^2 + (z-z1).^2) /...
-%         sqrt((x2-x1)^2+(y2-y1)^2+(z2-z1)^2) * (r2-r1);
-
-%     r = ( c + r2 ) / (sqrt ( 1 - ( |r1-r2 | / l ) )
-
-%     c = ( |r1 - r2| * l ) / L
+    %     c = ( |r1 - r2| * l ) / L
 
     if r2 > r1 
         pos = swc2v(x0,y0,z0,x2,x1,y2,y1,z2,z1,r2,r1,Nx,Ny,Nz);
     else
-
 
     rd = abs( r1 - r2 );
 
